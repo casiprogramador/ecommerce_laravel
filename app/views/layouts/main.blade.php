@@ -35,20 +35,19 @@
                             <li>
                                 <a href="#">Shop by Category {{HTML::image('img/down-arrow.gif', 'Shop by Category')}}</a>
                                 <ul>
-                                    <li><a href="#">Laptops</a></li>
-                                    <li><a href="#">Desktop PC</a></li>
-                                    <li><a href="#">Smartphones</a></li>
-                                    <li><a href="#">Tablets</a></li>
+                                    @foreach($catnav as $cat)
+                                        <li>{{ HTML::link('/store/category/'.$cat->id,$cat->name) }}</li>
+                                    @endforeach
                                 </ul>
                             </li>
                         </ul>
                     </nav>
 
                     <div id="search-form">
-                        <form action="#" method="get">
-                            <input type="search" name="search" placeholder="Search by keyword" class="search">
-                            <input type="submit" value="Search" class="search submit">
-                        </form>
+                        {{ Form::open(array('url'=>'store/search', 'method'=>'get'))}}
+                        {{ Form::text('keyword',null, array('placeholder'=>'Search by keyword','class'=>'search')) }}
+                        {{ Form::submit('Search', array('class'=>'search submit'))}}
+                        {{ Form::close() }}
                     </div><!-- end search-form -->
 
                     <div id="user-menu">
@@ -85,6 +84,8 @@
                 </section><!-- end action-bar -->
             </header>
             @yield('promo')
+
+            @yield('search-keyword')
             <hr />
 
             <section id="main-content" class="clearfix">
@@ -95,6 +96,7 @@
             </section><!-- end main-content -->
 
             <hr />
+            @yield('pagination')
 
             <footer>
                 <section id="contact">
